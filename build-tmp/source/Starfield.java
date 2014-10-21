@@ -18,13 +18,14 @@ Particle[] someBalls = new Particle[100];
 public void setup()
 {
 	size(500,500);
-	//noStroke();
+	noStroke();
 	for (int i=1; i<100; i++)
 	{
 
 		someBalls[i] = new NormalParticle();
 		}
-		someBalls[5] = new OddballParticle();	
+		someBalls[5] = new OddballParticle();
+		someBalls[2] = new JumboParticle();	
 }
 
 public void draw()
@@ -104,7 +105,7 @@ class OddballParticle implements Particle
 	{
 		myX=250;
 		myY=250;
-		speed=Math.random()*5;
+		speed=2;
 		angle=Math.PI*2*Math.random();
 		myColor=color(210,255,0);
 		mySize=40;
@@ -116,8 +117,31 @@ class OddballParticle implements Particle
 	}
 	public void move()
 	{
-	    myX=(Math.random()*speed)+myX;
-		myY=(Math.random()*speed)+myY;
+	    myX=(Math.sin(angle)*speed)+myX;
+		myY=(Math.cos(angle)*speed)+myY;
+		if(myX>500 || myX<0 || myY>500 || myY<0)
+		{
+			myX=Math.random()*500;
+			myY=Math.random()*500;
+		}
+
+	}
+
+}
+
+class JumboParticle extends NormalParticle
+{
+	int mySize;
+	int myColor;
+	JumboParticle()
+	{
+		mySize=150;
+		myColor = color(255);
+	}
+	public void show()
+	{
+		fill(myColor);
+		ellipse((float)myX,(float)myY,mySize,mySize);
 	}
 
 }
